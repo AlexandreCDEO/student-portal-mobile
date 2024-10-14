@@ -1,52 +1,58 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef } from 'react'
 import {
   View,
   Text,
   Pressable,
   TouchableWithoutFeedback,
   Animated,
-} from 'react-native';
-import { GraduationCap, User, Settings, LogOut, Menu } from 'lucide-react-native';
-import { colors } from '@/styles/colors';
-import { useNavigation, DrawerActions } from '@react-navigation/native';
-import { useRouter } from 'expo-router';
-import { Modal } from './modal';
-import ChangePassword from './change-password';
+} from 'react-native'
+import {
+  GraduationCap,
+  User,
+  Settings,
+  LogOut,
+  Menu,
+} from 'lucide-react-native'
+import { colors } from '@/styles/colors'
+import { useNavigation, DrawerActions } from '@react-navigation/native'
+import { useRouter } from 'expo-router'
+import { Modal } from './modal'
+import ChangePassword from './change-password'
 
 export function Header() {
-  const navigation = useNavigation();
-  const router = useRouter();
-  const slideAnimation = useRef(new Animated.Value(0)).current;
-  
-  const [isDropdownVisible, setIsDropdownVisible] = useState(false);
-  const [isModalVisible, setModalVisible] = useState(false);
-  const [headerHeight, setHeaderHeight] = useState(0);
+  const navigation = useNavigation()
+  const router = useRouter()
+  const slideAnimation = useRef(new Animated.Value(0)).current
 
-  const toggleMenu = () => navigation.dispatch(DrawerActions.toggleDrawer());
-  
+  const [isDropdownVisible, setIsDropdownVisible] = useState(false)
+  const [isModalVisible, setModalVisible] = useState(false)
+  const [headerHeight, setHeaderHeight] = useState(0)
+
+  const toggleMenu = () => navigation.dispatch(DrawerActions.toggleDrawer())
+
   const toggleDropdown = () => {
     if (!isDropdownVisible) {
-      setIsDropdownVisible(true);
+      setIsDropdownVisible(true)
       Animated.timing(slideAnimation, {
         toValue: 1,
         duration: 200,
         useNativeDriver: true,
-      }).start();
+      }).start()
     } else {
       Animated.timing(slideAnimation, {
         toValue: 0,
         duration: 200,
         useNativeDriver: true,
-      }).start(() => setIsDropdownVisible(false));
+      }).start(() => setIsDropdownVisible(false))
     }
-  };
+  }
 
   const dropdownTranslateY = slideAnimation.interpolate({
     inputRange: [0, 1],
     outputRange: [-10, 0],
-  });
+  })
 
-  const toggleModal = () => setModalVisible(!isModalVisible);
+  const toggleModal = () => setModalVisible(!isModalVisible)
 
   return (
     <>
@@ -66,7 +72,10 @@ export function Header() {
           </Text>
         </View>
 
-        <Pressable className="bg-white/10 rounded-full p-2" onPress={toggleDropdown}>
+        <Pressable
+          className="bg-white/10 rounded-full p-2"
+          onPress={toggleDropdown}
+        >
           <User color="white" size={24} />
         </Pressable>
       </View>
@@ -88,8 +97,8 @@ export function Header() {
             <Pressable
               className="flex-row items-center px-4 py-3 border-b border-gray-200"
               onPress={() => {
-                toggleDropdown();
-                toggleModal(); // Abrir o modal
+                toggleDropdown()
+                toggleModal() // Abrir o modal
               }}
             >
               <Settings color={colors.blue.app} size={20} />
@@ -99,8 +108,8 @@ export function Header() {
             <Pressable
               className="flex-row items-center px-4 py-3 border-b border-gray-200"
               onPress={() => {
-                console.log('Meus Dados');
-                toggleDropdown();
+                console.log('Meus Dados')
+                toggleDropdown()
               }}
             >
               <User color={colors.blue.app} size={20} />
@@ -110,7 +119,7 @@ export function Header() {
             <Pressable
               className="flex-row items-center px-4 py-3"
               onPress={() => {
-                toggleDropdown();
+                toggleDropdown()
                 router.replace('/')
               }}
             >
@@ -130,5 +139,5 @@ export function Header() {
         <ChangePassword />
       </Modal>
     </>
-  );
+  )
 }

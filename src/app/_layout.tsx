@@ -1,36 +1,35 @@
-import {Slot} from "expo-router";
+import { Slot } from 'expo-router'
 
-import "@/styles/global.css"
-import { StatusBar } from "expo-status-bar";
+import '@/styles/global.css'
+import { StatusBar } from 'expo-status-bar'
 
 import {
-    useFonts,
-    Roboto_400Regular,
-    Roboto_500Medium,
-    Roboto_700Bold
-} from "@expo-google-fonts/roboto"
-import { Loading } from "@/components/loading";
-import { SafeAreaView } from "react-native";
-import { colors } from "@/styles/colors";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { SafeAreaProvider } from "react-native-safe-area-context";
+  useFonts,
+  Roboto_400Regular,
+  Roboto_500Medium,
+  Roboto_700Bold,
+} from '@expo-google-fonts/roboto'
+import { Loading } from '@/components/loading'
+import { colors } from '@/styles/colors'
+import { GestureHandlerRootView } from 'react-native-gesture-handler'
 
 export default function Layout() {
-    const [ fontsLoaded ] = useFonts({
-        Roboto_400Regular,
-        Roboto_500Medium,
-        Roboto_700Bold
-    })
+  const [fontsLoaded] = useFonts({
+    Roboto_400Regular,
+    Roboto_500Medium,
+    Roboto_700Bold,
+  })
 
-    if(!fontsLoaded) {
-        return <Loading />
-    }
+  if (!fontsLoaded) {
+    return <Loading />
+  }
 
-    return(
-        <GestureHandlerRootView style={{ flex: 1, backgroundColor: colors.white, marginTop: 40 }}>
-            <StatusBar style="dark"/>
-            <Slot />
-        </GestureHandlerRootView>
-    )
-    
+  return (
+    <GestureHandlerRootView
+      style={{ flex: 1, backgroundColor: colors.white, marginTop: 40 }}
+    >
+      <StatusBar style="dark" />
+      <Slot />
+    </GestureHandlerRootView>
+  )
 }

@@ -1,4 +1,4 @@
-import { X } from "lucide-react-native";
+import { X } from 'lucide-react-native'
 import {
   View,
   Text,
@@ -6,19 +6,19 @@ import {
   ScrollView,
   Modal as RNModal,
   TouchableOpacity,
-} from "react-native";
-import { BlurView } from "expo-blur";
-import { colors } from "@/styles/colors";
+} from 'react-native'
+import { BlurView } from 'expo-blur'
+import { colors } from '@/styles/colors'
 
 type Props = ModalProps & {
-  title: string;
-  subtitle?: string;
-  onClose?: () => void;
-};
+  title: string
+  subtitle?: string
+  onClose?: () => void
+}
 
 export function Modal({
   title,
-  subtitle = "",
+  subtitle = '',
   onClose,
   children,
   ...rest
@@ -38,7 +38,9 @@ export function Modal({
         <View className="bg-white w-5/6 max-w-md rounded-lg border border-gray-300 p-6 shadow-lg">
           <ScrollView showsVerticalScrollIndicator={false}>
             <View className="flex-row justify-between items-center mb-4">
-              <Text className="text-gray-500 ml-5 font-medium text-xl">{title}</Text>
+              <Text className="text-gray-500 ml-5 font-medium text-xl">
+                {title}
+              </Text>
 
               {onClose && (
                 <TouchableOpacity activeOpacity={0.7} onPress={onClose}>
@@ -58,5 +60,5 @@ export function Modal({
         </View>
       </BlurView>
     </RNModal>
-  );
+  )
 }

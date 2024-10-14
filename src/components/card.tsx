@@ -1,68 +1,96 @@
-import React from 'react';
-import { View, Text } from 'react-native';
+import React from 'react'
+import { View, Text } from 'react-native'
 
 // Função para combinar classes, você pode usar algo semelhante ao 'cn' que mencionou
-const cn = (...classes: (string | undefined)[]) => classes.filter(Boolean).join(' ');
+const cn = (...classes: (string | undefined)[]) =>
+  classes.filter(Boolean).join(' ')
 
 // Card Component
-function Card({ className = '', ...props }: React.ComponentPropsWithoutRef<typeof View>) {
+function Card({
+  className = '',
+  ...props
+}: React.ComponentPropsWithoutRef<typeof View>) {
   return (
-    <View className={cn('p-10 rounded-xl border border-gray-300', className)} {...props} />
-  );
+    <View
+      className={cn('p-10 rounded-xl border border-gray-300', className)}
+      {...props}
+    />
+  )
 }
 
 // CardHeader Component
-function CardHeader({ className = '', ...props }: React.ComponentPropsWithoutRef<typeof View>) {
-  return <View className={cn('p-4', className)} {...props} />;
+function CardHeader({
+  className = '',
+  ...props
+}: React.ComponentPropsWithoutRef<typeof View>) {
+  return <View className={cn('p-4', className)} {...props} />
 }
 
 // CardTitle Component
-function CardTitle({ className = '', ...props }: React.ComponentPropsWithoutRef<typeof Text>) {
+function CardTitle({
+  className = '',
+  ...props
+}: React.ComponentPropsWithoutRef<typeof Text>) {
   return (
     <Text
-      className={cn('text-2xl font-semibold tracking-tight text-primary', className)}
+      className={cn(
+        'text-2xl font-semibold tracking-tight text-primary',
+        className,
+      )}
       {...props}
     />
-  );
+  )
 }
 
 // CardDescription Component
-function CardDescription({ className = '', ...props }: React.ComponentPropsWithoutRef<typeof Text>) {
-  return (
-    <Text className={cn('text-sm text-gray-500', className)} {...props} />
-  );
+function CardDescription({
+  className = '',
+  ...props
+}: React.ComponentPropsWithoutRef<typeof Text>) {
+  return <Text className={cn('text-sm text-gray-500', className)} {...props} />
 }
 
 // CardContent Component
-function CardContent({ className = '', ...props }: React.ComponentPropsWithoutRef<typeof View>) {
-  return <View className={cn('p-4 pt-0', className)} {...props} />;
+function CardContent({
+  className = '',
+  ...props
+}: React.ComponentPropsWithoutRef<typeof View>) {
+  return <View className={cn('p-4 pt-0', className)} {...props} />
 }
 
 // CardFooter Component
-function CardFooter({ className = '', ...props }: React.ComponentPropsWithoutRef<typeof View>) {
+function CardFooter({
+  className = '',
+  ...props
+}: React.ComponentPropsWithoutRef<typeof View>) {
   return (
-    <View className={cn('flex flex-row items-center p-4 pt-0', className)} {...props} />
-  );
+    <View
+      className={cn('flex flex-row items-center p-4 pt-0', className)}
+      {...props}
+    />
+  )
 }
 
 // SimpleCard Component
 interface SimpleCardProps {
-  className?: string;
-  title?: string;
-  description?: string;
-  content?: string;
-  footer?: string;
+  className?: string
+  title?: string
+  description?: string
+  content?: string
+  footer?: string
 }
-function SimpleCard({ className, title, description, content, footer }: SimpleCardProps) {
+function SimpleCard({
+  className,
+  title,
+  description,
+  content,
+  footer,
+}: SimpleCardProps) {
   return (
     <Card className={className}>
       <CardHeader>
-        {title && (
-          <CardTitle>{title}</CardTitle>
-        )}
-        {description && (
-          <CardDescription>{description}</CardDescription>
-        )}
+        {title && <CardTitle>{title}</CardTitle>}
+        {description && <CardDescription>{description}</CardDescription>}
       </CardHeader>
       {content && (
         <CardContent>
@@ -75,7 +103,7 @@ function SimpleCard({ className, title, description, content, footer }: SimpleCa
         </CardFooter>
       )}
     </Card>
-  );
+  )
 }
 
 export {
@@ -86,4 +114,4 @@ export {
   CardContent,
   CardFooter,
   SimpleCard,
-};
+}

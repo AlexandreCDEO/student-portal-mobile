@@ -1,12 +1,11 @@
 export const colors = {
-    blue: {
-        app: "#4978B0"
-    },
+  blue: {
+    app: '#4978B0',
+  },
 
-    gray: {
-        appBorder: "#d7dfe3",
-    },
+  gray: {
+    appBorder: '#d7dfe3',
+  },
 
-    white: "#FFFFFF",
-
+  white: '#FFFFFF',
 }

@@ -12,6 +12,7 @@ import {
 import { Loading } from '@/components/loading'
 import { colors } from '@/styles/colors'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
+import { ImageBackground } from 'react-native'
 
 export default function Layout() {
   const [fontsLoaded] = useFonts({
@@ -29,7 +30,13 @@ export default function Layout() {
       style={{ flex: 1, backgroundColor: colors.white, marginTop: 40 }}
     >
       <StatusBar style="dark" />
-      <Slot />
+      <ImageBackground
+        source={require('../assets/bg.png')}
+        style={{ flex: 1 }}
+        resizeMode="repeat"
+      >
+        <Slot />
+      </ImageBackground>
     </GestureHandlerRootView>
   )
 }

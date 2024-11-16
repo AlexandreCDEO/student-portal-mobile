@@ -24,13 +24,23 @@ export default function DrawerLayout() {
             backBehavior="history"
           >
             <Drawer.Screen
-              name="dependencie"
+              name="dashboard"
               options={
                 {
-                  title: 'Dependências',
-                  iconName: 'Link',
+                  title: 'Início',
+                  iconName: 'Home',
                   isDivider: false,
-                  sectionTitle: 'Aulas',
+                } as CustomOptions
+              }
+            />
+
+            <Drawer.Screen
+              name="academic-calendar"
+              options={
+                {
+                  title: 'Calendário acadêmico',
+                  iconName: 'CalendarClock',
+                  isDivider: false,
                 } as CustomOptions
               }
             />
@@ -42,6 +52,29 @@ export default function DrawerLayout() {
                   title: 'Notas e Faltas',
                   iconName: 'FileText',
                   isDivider: false,
+                  sectionTitle: 'Aulas',
+                } as CustomOptions
+              }
+            />
+
+            <Drawer.Screen
+              name="dependencie"
+              options={
+                {
+                  title: 'Dependências',
+                  iconName: 'Link',
+                  isDivider: false,
+                } as CustomOptions
+              }
+            />
+
+            <Drawer.Screen
+              name="negotiation"
+              options={
+                {
+                  title: 'Negociação',
+                  iconName: 'Handshake',
+                  isDivider: true,
                 } as CustomOptions
               }
             />

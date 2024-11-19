@@ -6,6 +6,8 @@ import { useForm, Controller, SubmitHandler } from 'react-hook-form'
 import { useRouter } from 'expo-router'
 import { createSession } from '@/server/create-session'
 import axios from 'axios'
+import { Alert, AlertDescription, AlertTitle } from '@/components/alert'
+import { useState } from 'react'
 
 type FormData = {
   matricula: string
@@ -18,19 +20,39 @@ export default function Authenticate() {
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>()
+
+  const [showAlert, setShowAlert] = useState(false)
+  const [titleAlert, setTitleAlert] = useState('')
+  const [descriptionAlert, setDescriptionAlert] = useState('')
+
   const router = useRouter()
 
   const onSubmit: SubmitHandler<FormData> = (data) => {
     handleCreateSession(data.matricula, data.senha)
   }
 
+  function handleShowAlert(
+    isShow: boolean,
+    title: string,
+    description: string,
+  ) {
+    if (isShow) {
+      setTitleAlert(title)
+      setDescriptionAlert(description)
+      setShowAlert(true)
+    } else {
+      setTitleAlert('')
+      setDescriptionAlert('')
+      setShowAlert(false)
+    }
+  }
+
   async function handleCreateSession(username: string, password: string) {
     try {
       const result = await createSession({ username, password })
-
-      if (result.shouldChangePassword) {
-        router.push('/change-password')
-      } else if (result.registrations) {
+      if (result.userIdToChangePassword) {
+        router.push(`/change-password/${result.userIdToChangePassword}`)
+      } else if (result.registrations.length > 1) {
         alert('Selecionar matrícula')
       } else if (result.token) {
         router.replace('/dashboard' as const)
@@ -40,33 +62,30 @@ export default function Authenticate() {
         // Erro específico de Axios
         if (error.response) {
           // Erro retornado pelo servidor (4xx ou 5xx)
-          console.error('Erro do servidor:', error.response.data)
-          alert(
-            `Erro: ${error.response.data.message || 'Falha na autenticação.'}`,
+          handleShowAlert(
+            true,
+            'Erro!',
+            error.response.data.message || 'Falha na autenticação.',
           )
         } else if (error.request) {
           // A requisição foi feita, mas nenhuma resposta foi recebida
-          console.error('Nenhuma resposta recebida:', error.request)
-          alert('Erro de rede. Verifique sua conexão.')
+          handleShowAlert(true, 'Erro!', 'Erro de rede. Verifique sua conexão.')
         } else {
           // Algum outro erro ocorreu ao configurar a requisição
-          console.error('Erro ao configurar a requisição:', error.message)
-          alert('Erro desconhecido. Tente novamente.')
+          handleShowAlert(true, 'Erro!', 'Erro desconhecido. Tente novamente.')
         }
       } else {
         // Erro fora do escopo do Axios
-        console.error('Erro inesperado:', error)
-        alert('Ocorreu um erro inesperado. Tente novamente mais tarde.')
+        handleShowAlert(
+          true,
+          'Erro!',
+          'Ocorreu um erro inesperado. Tente novamente mais tarde.',
+        )
       }
     }
   }
 
   return (
-    // <ImageBackground
-    //   source={require('../assets/bg.png')}
-    //   style={{ flex: 1 }}
-    //   resizeMode="repeat"
-    // >
     <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
       <View className="flex-1 justify-center items-center">
         <Card className="bg-white rounded-lg w-[80%] gap-10">
@@ -81,8 +100,14 @@ export default function Authenticate() {
             </Text>
           </View>
 
+          {showAlert && (
+            <Alert variant="destructive">
+              <AlertTitle>{titleAlert}</AlertTitle>
+              <AlertDescription>{descriptionAlert}</AlertDescription>
+            </Alert>
+          )}
+
           <View className="gap-2">
-            {/* Campo Matrícula/CPF */}
             <Controller
               control={control}
               name="matricula"
@@ -93,6 +118,7 @@ export default function Authenticate() {
                     placeholder="Nº da Matrícula ou CPF"
                     onChangeText={onChange}
                     onBlur={onBlur}
+                    onFocus={() => handleShowAlert(false, '', '')}
                     value={value}
                   />
                 </Input>
@@ -103,7 +129,6 @@ export default function Authenticate() {
                 <Text className="text-red-500">{errors.matricula.message}</Text>
               )}
 
-            {/* Campo Senha */}
             <Controller
               control={control}
               name="senha"
@@ -114,6 +139,7 @@ export default function Authenticate() {
                     placeholder="Senha"
                     onChangeText={onChange}
                     onBlur={onBlur}
+                    onFocus={() => handleShowAlert(false, '', '')}
                     value={value}
                   />
                 </Input>
@@ -131,6 +157,5 @@ export default function Authenticate() {
         </Card>
       </View>
     </ScrollView>
-    // </ImageBackground>
   )
 }

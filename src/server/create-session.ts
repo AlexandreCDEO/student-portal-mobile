@@ -6,9 +6,9 @@ type CreateSessionsProps = {
 }
 
 type CreateSessionsResponse = {
-  token: string
+  token: string | null
   registrations: string[]
-  shouldChangePassword: boolean
+  userIdToChangePassword: number | null
 }
 
 export async function createSession({

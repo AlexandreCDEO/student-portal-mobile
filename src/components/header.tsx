@@ -17,7 +17,6 @@ import { colors } from '@/styles/colors'
 import { useNavigation, DrawerActions } from '@react-navigation/native'
 import { useRouter } from 'expo-router'
 import { Modal } from './modal'
-import ChangePassword from './change-password'
 
 export function Header() {
   const navigation = useNavigation()
@@ -136,7 +135,7 @@ export function Header() {
         title="Alterar senha"
         onClose={toggleModal}
       >
-        <ChangePassword />
+        {/* <ChangePassword /> */}
       </Modal>
     </>
   )
